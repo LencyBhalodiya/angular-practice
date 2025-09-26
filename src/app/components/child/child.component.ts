@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, Signal, signal, WritableSignal } from '@angular/core';
 
 @Component({
   selector: 'app-child',
@@ -8,11 +8,14 @@ import { Component, signal } from '@angular/core';
   styleUrl: './child.component.scss'
 })
 export class ChildComponent {
-  title = signal<any>({ title: 'Angular Signals Starter' });
-  obj:any = { title: "it's change now" };
+  title: WritableSignal<any> = signal<any>({ title: 'Angular Signals Starter' });
+
+  obj: any = { title: "it's change now" };
+
+  derivedTitle: Signal<string> = computed(() => this.title().title + ' derived');
 
   onbtnClick(): void {
-    
+
     this.title.set(this.obj);
 
     setTimeout(() => {
