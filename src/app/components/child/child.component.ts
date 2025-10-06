@@ -1,4 +1,4 @@
-import { Component, computed, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, Signal, signal, WritableSignal } from '@angular/core';
 
 @Component({
   selector: 'app-child',
@@ -8,6 +8,15 @@ import { Component, computed, Signal, signal, WritableSignal } from '@angular/co
   styleUrl: './child.component.scss'
 })
 export class ChildComponent {
+
+  constructor() {
+
+    effect(() => {
+     console.log('Effect run: ', this.title());
+    });
+  }
+
+
   title: WritableSignal<any> = signal<any>({ title: 'Angular Signals Starter' });
 
   obj: any = { title: "it's change now" };
@@ -20,6 +29,6 @@ export class ChildComponent {
 
     setTimeout(() => {
       this.title.update((obj) => ({ ...obj, title: obj.title + ' Again' }));
-    }, 1000);
+    }, 1200);
   }
 }
